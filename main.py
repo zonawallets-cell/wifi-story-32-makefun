@@ -28,6 +28,11 @@ def main():
         )
     if not text.strip():
         raise SystemExit("entry must not be only whitespace")
+    if any(ord(ch) < 32 or ord(ch) == 127 for ch in text):
+        raise SystemExit(
+            "entry must not contain control characters: "
+            "a Wi-Fi name is shown on one line in a network list"
+        )
 
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
